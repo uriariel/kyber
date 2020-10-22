@@ -92,17 +92,17 @@ void ntt(int16_t r[256]) {
   unsigned int len, start, j, k;
   int16_t t, zeta;
 
-  k = 1;
-  for(len = 128; len >= 2; len >>= 1) {
-    for(start = 0; start < 256; start = j + len) {
-      zeta = zetas[k++];
-      for(j = start; j < start + len; ++j) {
-        t = fqmul(zeta, r[j + len]);
-        r[j + len] = r[j] - t;
-        r[j] = r[j] + t;
-      }
-    }
-  }
+  /* k = 1; */
+  /* for(len = 128; len >= 2; len >>= 1) { */
+  /*   for(start = 0; start < 256; start = j + len) { */
+  /*     zeta = zetas[k++]; */
+  /*     for(j = start; j < start + len; ++j) { */
+  /*       t = fqmul(zeta, r[j + len]); */
+  /*       r[j + len] = r[j] - t; */
+  /*       r[j] = r[j] + t; */
+  /*     } */
+  /*   } */
+  /* } */
 }
 
 /*************************************************
@@ -119,21 +119,21 @@ void invntt(int16_t r[256]) {
   unsigned int start, len, j, k;
   int16_t t, zeta;
 
-  k = 0;
-  for(len = 2; len <= 128; len <<= 1) {
-    for(start = 0; start < 256; start = j + len) {
-      zeta = zetas_inv[k++];
-      for(j = start; j < start + len; ++j) {
-        t = r[j];
-        r[j] = barrett_reduce(t + r[j + len]);
-        r[j + len] = t - r[j + len];
-        r[j + len] = fqmul(zeta, r[j + len]);
-      }
-    }
-  }
+  /* k = 0; */
+  /* for(len = 2; len <= 128; len <<= 1) { */
+  /*   for(start = 0; start < 256; start = j + len) { */
+  /*     zeta = zetas_inv[k++]; */
+  /*     for(j = start; j < start + len; ++j) { */
+  /*       t = r[j]; */
+  /*       r[j] = barrett_reduce(t + r[j + len]); */
+  /*       r[j + len] = t - r[j + len]; */
+  /*       r[j + len] = fqmul(zeta, r[j + len]); */
+  /*     } */
+  /*   } */
+  /* } */
 
-  for(j = 0; j < 256; ++j)
-    r[j] = fqmul(r[j], zetas_inv[127]);
+  /* for(j = 0; j < 256; ++j) */
+  /*   r[j] = fqmul(r[j], zetas_inv[127]); */
 }
 
 /*************************************************
